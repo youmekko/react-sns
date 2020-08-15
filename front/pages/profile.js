@@ -1,12 +1,18 @@
 import AppLayout from '../components/AppLayout'
+import Head from 'next/head'
 
 function profile() {
     return (
-        <AppLayout>
-            <div>
-                profile
-            </div>
-        </AppLayout>
+        <>
+            <Head>
+                <title>Profile | React SNS</title>
+            </Head>
+            <AppLayout>
+                <div>
+                    profile
+                </div>
+            </AppLayout>
+        </>
        
     )
 }

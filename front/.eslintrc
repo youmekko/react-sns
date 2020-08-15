@@ -18,6 +18,8 @@
     "plugins": [
         "import",
         "react-hooks"
-    ]
+    ],
+    "rules": {
 
+    }
 }
