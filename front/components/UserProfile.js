@@ -11,7 +11,7 @@ function UserProfile({ setIsLoggedIn }) {
         <Card
             actions={[
                 <div key="tweet">tweet<br/>0</div>,
-                <div key="followings">followings<br/>0</div>,
+                <div key="follows">follows<br/>0</div>,
                 <div key="followers">followers<br/>0</div>
             ]}    
         >
