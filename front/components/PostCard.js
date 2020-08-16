@@ -1,4 +1,4 @@
-import { Card, Popover, Button, Avatar } from 'antd'
+import { Card, Popover, Button, Avatar, List, Comment } from 'antd'
 import { useState, useCallback } from 'react' 
 import { 
     RetweetOutlined, 
@@ -10,6 +10,7 @@ import {
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import PostImages from './PostImages'
+import CommentForm from '../components/CommentForm'
 
 function PostCard({ post }) {
     const [liked, setLiked] = useState(false)
@@ -60,7 +61,21 @@ function PostCard({ post }) {
             </Card>
             {commentFormOpended && (
                 <div>
-                    Comments Part
+                    <CommentForm post={post} />
+                    <List 
+                        header={`${post.Comments.length} comments`}
+                        itemLayout="horizontal"
+                        dataSource={post.Comments}
+                        renderItem={(item) => (
+                            <li>
+                                <Comment
+                                    author={item.User.nickname}
+                                    avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
+                                    content={item.content}
+                                />
+                            </li>
+                        )}
+                    /> 
                 </div>)}
             {/* <CommentForm />
             <Comments /> */}
