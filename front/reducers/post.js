@@ -8,14 +8,11 @@ export const initialState = {
         content: 'first post #hashtag #frozen #ellsa',
         Images: [
             {
-                src: ''
+                src: 'https://dummyimage.com/300/ff0000/ffffff.png'
             },
             {
-                src: ''
-            },
-            {
-                src: ''
-            },
+                src: 'https://dummyimage.com/300/ff0000/ffffff.png'
+            }
         ],
         Comments: [
             {

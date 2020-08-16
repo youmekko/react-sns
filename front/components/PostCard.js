@@ -29,7 +29,7 @@ function PostCard({ post }) {
     return (
         <div style={{ marginBottom : '20px' }}>
             <Card
-                conver={post.Images[0] && <PostImages images={post.Images} />} 
+                cover={post.Images[0] && <PostImages images={post.Images} />} 
                 actions={[ 
                     <RetweetOutlined key="retweet" />,
                     liked 
