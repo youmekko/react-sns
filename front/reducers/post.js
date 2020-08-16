@@ -11,7 +11,10 @@ export const initialState = {
                 src: 'https://dummyimage.com/300/ff0000/ffffff.png'
             },
             {
-                src: 'https://dummyimage.com/300/ff0000/ffffff.png'
+                src: 'https://dummyimage.com/300/9d9d9d/ffffff.png'
+            },
+            {
+                src: 'https://dummyimage.com/300/63414d/ffffff.png'
             }
         ],
         Comments: [
