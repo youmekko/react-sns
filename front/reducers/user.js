@@ -34,7 +34,7 @@ const dummyUser = (data) => ({
     id: 1,
     nickname: 'ellsa',
     Posts: [],
-    Followings: [],
+    Follows: [],
     Followers: []
 })
 

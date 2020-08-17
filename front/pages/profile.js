@@ -3,12 +3,10 @@ import Head from 'next/head'
 import NickNameEditForm from '../components/NickNameEditForm'
 import FollowList from '../components/followList'
 import FollowerList from '../components/FollowerList'
+import { useSelector } from 'react-reudx'
 
 function profile() {
-
-    const followList = [{ nickname: '엘사'}, { nickname: '안나'}]
-    const followerList = [{ nickname: '울라프'}, { nickname: '크리스토프'}]
-    
+    const { me } = useSelector(state => state.user)
 
     return (
         <>
@@ -17,8 +15,8 @@ function profile() {
             </Head>
             <AppLayout>
                 <NickNameEditForm />
-                <FollowList header="Follow List" data={followList} />
-                <FollowerList header="Follower List" data={followerList} />
+                <FollowList header="Follows" data={me.Follows} />
+                <FollowerList header="Followers" data={me.Followers} />
             </AppLayout>
         </>
     )

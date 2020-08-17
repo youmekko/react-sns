@@ -4,13 +4,18 @@ import { Form, Input, Checkbox, Button } from 'antd'
 import { useState, useCallback } from 'react'
 import useInput from '../hooks/useInput'
 import styled from 'styled-components'
+import { useDispatch, userSelector } from 'react-redux'
+import { SIGNUP_REQUEST } from '../actions/use'
 
 const ErrorMessage = styled.div`
     color: red
 `
 
 function signup() {
-    const [id, onChangeId] = useInput('')
+    const dispatch = useDispatch()
+    const { signupLoading } = useSelector(state => state.user)
+
+    const [email, onChangeEmail] = useInput('')
     const [nickname, onChangeNickname] = useInput('')
     const [password, onChangePassword] = useInput('')
    
@@ -39,9 +44,14 @@ function signup() {
             return setTermError(true)
         }
 
-        console.log(id, nickname, password)
+        console.log(email, nickname, password)
 
-    }, [password, passwordCheck, term])
+        dispatch({
+            type: SIGNUP_REQUEST,
+            data: { email, password, nickname}
+        })
+
+    }, [email, password, passwordCheck, term])
 
     return (
         <>
@@ -51,9 +61,9 @@ function signup() {
         <AppLayout>
             <Form onFinish={onSubmit}> 
                 <div>
-                    <label htmlFor="user-id">Id</label>
+                    <label htmlFor="user-email">Email</label>
                     <br />
-                    <Input name="user-id" value={id} required onChange={onChangeId} />
+                    <Input name="user-email" type="email" value={email} required onChange={onChangeEmail} />
                 </div> 
                 <div>
                     <label htmlFor="user-nickname">Nickname</label>
@@ -82,7 +92,7 @@ function signup() {
                     {termError && <ErrorMessage>Please agree to our terms!</ErrorMessage>}
                 </div>
                 <div style={{marginTop: 10}}>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" loading={signupLoading}>
                         Signup
                     </Button>
                 </div>
