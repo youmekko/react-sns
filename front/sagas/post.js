@@ -9,12 +9,12 @@ function* addPost (action) {
         yield delay(1000)
         // const result  = yield call(addPostAPI, action.data)
         yield put({
-            type: 'LOGIN_SUCCESS',
+            type: 'ADD_POST_SUCCESS',
             data: result.data
         })
     } catch (err) {
         yield put({
-            type: 'LOGIN_SUCCESS',
+            type: 'ADD_POST_FAILURE',
             data: err.response.data
         })
     }

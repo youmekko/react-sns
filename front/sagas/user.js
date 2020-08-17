@@ -15,7 +15,7 @@ function* login (action) {
         })
     } catch (err) {
         yield put({
-            type: 'LOGIN_SUCCESS',
+            type: 'LOGIN_FAILURE',
             data: err.response.data
         })
     }
@@ -39,7 +39,7 @@ function* logout () {
         })
     } catch (err) {
         yield put({
-            type: 'LOGOUTSUCCESS',
+            type: 'LOGOUT_FAILURE',
             data: err.response.data
         })
     }
