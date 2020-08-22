@@ -14,10 +14,15 @@ import { useSelector } from 'react-redux'
 import PostImages from './PostImages'
 import CommentForm from './CommentForm'
 import PostCardContent from './PostCardContent'
+import styled from 'styled-components'
+
+const CardWrapper = styled.div`
+  margin-bottom: 20px;
+`;
 
 function PostCard({ post }) {
     const [liked, setLiked] = useState(false)
-    const [commentFormOpended, setCommentFormOpended] = useState(false)
+    const [commentFormOpened, setCommentFormOpened] = useState(false)
 
     const id = useSelector((state) => state.user.me?.id)
 
@@ -26,11 +31,11 @@ function PostCard({ post }) {
     }, [])
 
     const onToggleComment = useCallback(() => {
-        setCommentFormOpended((prev) => !prev)
+        setCommentFormOpened((prev) => !prev)
     }, [])
 
     return (
-        <div style={{ marginBottom: '20px' }}>
+        <CardWrapper key={post.id}>
             <Card
                 cover={post.Images[0] && <PostImages images={post.Images} />} 
                 actions={[ 
@@ -65,13 +70,13 @@ function PostCard({ post }) {
                 />
                 {/* <Button></Button> */}
             </Card>
-            {commentFormOpended && (
-                <div>
+            {commentFormOpened && (
+                <>
                     <CommentForm post={post} />
                     <List 
                         header={`${post.Comments.length} comments`}
                         itemLayout="horizontal"
-                        dataSource={post.Comments}
+                        dataSource={post.Comments || []}
                         renderItem={(item) => (
                             <li>
                                 <Comment
@@ -82,16 +87,17 @@ function PostCard({ post }) {
                             </li>
                         )}
                     /> 
-                </div>)}
-        </div>
+                </>
+            )}
+        </CardWrapper>
     )
 }
 
 PostCard.propTypes = {
     post: PropTypes.shape({
-        id: PropTypes.number,
+        id: PropTypes.string,
         User: PropTypes.shape({
-            id: PropTypes.string,
+            id: PropTypes.number,
             nickname: PropTypes.string,
         }),
         content: PropTypes.string,

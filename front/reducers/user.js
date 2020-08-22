@@ -2,6 +2,7 @@ import {
     LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,
     LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE,
     SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE,
+    CHANGE_NICKNAME_REQUEST, CHANGE_NICKNAME_SUCCESS, CHANGE_NICKNAME_FAILURE,
 } from '../actions/user'
 
 export const initialState = {
@@ -14,6 +15,9 @@ export const initialState = {
     signupLoading: false,
     signupDone: false,
     signupError: false,
+    changeNicknameLoading: false,
+    changeNicknameDone: false,
+    changeNicknameError: false,
     me: null,
     signupData: {},
     loginData: {},
@@ -98,6 +102,25 @@ const reducer = (state = initialState, action) => {
             ...state,
             signupLoading: false,
             signupError: action.error,
+        }
+    case CHANGE_NICKNAME_REQUEST:
+        return {
+            ...state,
+            changeNicknameLoading: true,
+            changeNicknameDone: false,
+            changeNicknameError: false,
+        }
+    case CHANGE_NICKNAME_SUCCESS:
+        return {
+            ...state,
+            changeNicknameLoading: false,
+            changeNicknameDone: true,
+        }
+    case CHANGE_NICKNAME_FAILURE:
+        return {
+            ...state,
+            changeNicknameLoading: false,
+            changeNicknameError: action.error,
         }
 
     default:

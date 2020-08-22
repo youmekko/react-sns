@@ -16,19 +16,13 @@ function UserProfile() {
         <Card
             actions={[
                 <div key="tweet">
-                    {me.post.length}
-                    <br />
-                    0
+                    {me.Posts.length}
                 </div>,
                 <div key="follows">
                     {me.Follows.length}
-                    <br />
-                    0
                 </div>,
                 <div key="followers">
                     {me.Followers.length}
-                    <br />
-                    0
                 </div>,
             ]}    
         >

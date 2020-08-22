@@ -45,6 +45,7 @@ function LoginForm() {
                 <Input 
                     name="user-password" 
                     value={password} 
+                    type="password"
                     onChange={onChangePassword} 
                     required 
                 />

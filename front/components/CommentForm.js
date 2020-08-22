@@ -8,7 +8,7 @@ import { ADD_COMMENT_REQUEST } from '../actions/post'
 function CommentForm({ post }) {
     const dispatch = useDispatch()
     const id = useSelector((state) => state.user.me?.id)
-    const { addCommentDone } = useSelector((state) => state.post)
+    const { addCommentLoading, addCommentDone } = useSelector((state) => state.post)
 
     const [commentText, onChangeCommentText, setCommentText] = useInput('')
 
@@ -36,9 +36,10 @@ function CommentForm({ post }) {
                 <Button
                     type="primary"
                     htmlType="submit"
-                    style={{ position: 'absolute', right: 0, bottom: -40 }}
+                    style={{ position: 'absolute', right: 0, bottom: -40, zIndex: 1 }}
+                    loading={addCommentLoading}
                 >
-                    Tweet
+                    Comment
                 </Button>
             </Form.Item>
         </Form>
@@ -46,8 +47,8 @@ function CommentForm({ post }) {
 }
 
 CommentForm.propTypes = {
-    post: PropTypes.shahpe({
-
+    post: PropTypes.shape({
+        id: PropTypes.string,
     }).isRequired,
 }
 

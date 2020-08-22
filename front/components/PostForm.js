@@ -9,6 +9,7 @@ function PostForm() {
 
     const { imagePaths, addPostDone } = useSelector((state) => state.post)
     const [text, onChangeText, setText] = useInput('')
+
     useEffect(() => {
         if (addPostDone) {
             setText('')
@@ -20,6 +21,7 @@ function PostForm() {
     }, [text])
 
     const imageInput = useRef()
+    
     const onClickImageUpload = useCallback(() => {
         imageInput.current.click()
     }, [imageInput.current])
