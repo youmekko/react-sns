@@ -1,6 +1,7 @@
 import shortId from 'shortid'
 import {
     ADD_POST_REQUEST, ADD_POST_SUCCESS, ADD_POST_FAILURE,
+    REMOVE_POST_REQUEST, REMOVE_POST_SUCCESS, REMOVE_POST_FAILURE,
     ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAILURE,
 } from '../actions/post'
 
@@ -42,19 +43,13 @@ export const initialState = {
     addPostLoading: false,
     addPostDone: false,
     addPostError: false,
+    removePostLoading: false,
+    removePostDone: false,
+    removePostError: false,
     addCommentLoading: false,
     addCommentDone: false,
     addCommentError: false,
 }
-
-const dummyComment = (data) => ({
-    id: shortId.generate(),
-    content: data,
-    User: {
-        id: 1,
-        nickname: 'ellsa',
-    },
-}) 
 
 export const addPost = (data) => ({
     type: ADD_POST_REQUEST,
@@ -67,8 +62,8 @@ export const addCommnet = (data) => ({
 })
 
 const dummyPost = (data) => ({
-    id: shortId.generate(),
-    content: data,
+    id: data.id,
+    content: data.content,
     User: {
         id: 1,
         nickname: 'ellsa',
@@ -76,6 +71,15 @@ const dummyPost = (data) => ({
     Images: [],
     Comments: [],
 })
+
+const dummyComment = (data) => ({
+    id: shortId.generate(),
+    content: data,
+    User: {
+        id: 1,
+        nickname: 'ellsa',
+    },
+}) 
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -98,6 +102,26 @@ const reducer = (state = initialState, action) => {
             ...state,
             addPostLoading: false,
             addPostError: true,
+        }
+    case REMOVE_POST_REQUEST:
+        return {
+            ...state,
+            removePostLoading: true,
+            removePostDone: false,
+            removePostError: false,
+        }
+    case REMOVE_POST_SUCCESS:
+        return {
+            ...state,
+            mainPosts: state.mainPosts.filter((v) => v.id !== action.data),
+            removePostLoading: false,
+            removePostDone: true,
+        }
+    case REMOVE_POST_FAILURE:
+        return {
+            ...state,
+            removePostLoading: false,
+            removePostError: true,
         }
     case ADD_COMMENT_REQUEST:
         return {

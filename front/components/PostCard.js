@@ -10,21 +10,25 @@ import {
     EllipsisOutlined,
 } from '@ant-design/icons'
 import PropTypes from 'prop-types'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import styled from 'styled-components'
 import PostImages from './PostImages'
 import CommentForm from './CommentForm'
 import PostCardContent from './PostCardContent'
-import styled from 'styled-components'
+import { REMOVE_POST_REQUEST } from '../actions/post'
 
 const CardWrapper = styled.div`
   margin-bottom: 20px;
 `;
 
 function PostCard({ post }) {
+    const dispatch = useDispatch()
+
     const [liked, setLiked] = useState(false)
     const [commentFormOpened, setCommentFormOpened] = useState(false)
 
     const id = useSelector((state) => state.user.me?.id)
+    const { removePostLoading } = useSelector((state) => state.post)
 
     const onToggleLike = useCallback(() => {
         setLiked((prev) => !prev)
@@ -32,6 +36,13 @@ function PostCard({ post }) {
 
     const onToggleComment = useCallback(() => {
         setCommentFormOpened((prev) => !prev)
+    }, [])
+
+    const onRemovePost = useCallback(() => {
+        dispatch({
+            type: REMOVE_POST_REQUEST,
+            data: post.id,
+        })
     }, [])
 
     return (
@@ -52,7 +63,13 @@ function PostCard({ post }) {
                                     ? (
                                         <>
                                             <Button type="primary">Edit</Button>
-                                            <Button type="danger">Delete</Button>
+                                            <Button 
+                                                type="danger"
+                                                onClick={onRemovePost}
+                                                loading={removePostLoading}
+                                            >
+                                                Delete
+                                            </Button>
                                         </>
                                     ) 
                                     : <Button>Report</Button>}

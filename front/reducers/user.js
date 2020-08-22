@@ -3,6 +3,7 @@ import {
     LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE,
     SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE,
     CHANGE_NICKNAME_REQUEST, CHANGE_NICKNAME_SUCCESS, CHANGE_NICKNAME_FAILURE,
+    ADD_POST_TO_ME, REMOVE_POST_OF_ME
 } from '../actions/user'
 
 export const initialState = {
@@ -36,15 +37,14 @@ const dummyUser = (data) => ({
     ...data,
     id: 1,
     nickname: 'ellsa',
-    Posts: [],
-    Follows: [],
-    Followers: [],
+    Posts: [{ id: 1 }],
+    Follows: [{ nickname: 'jennie' }, { nickname: 'reose' }, { nickname: 'risa' }],
+    Followers: [{ nickname: 'nako' }, { nickname: 'hi' }],
 })
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
     case LOGIN_REQUEST:
-        console.log('reducer login')
         return {
             ...state,
             loginLoading: true,
@@ -122,7 +122,22 @@ const reducer = (state = initialState, action) => {
             changeNicknameLoading: false,
             changeNicknameError: action.error,
         }
-
+    case ADD_POST_TO_ME: 
+        return {
+            ...state,
+            me: {
+                ...state.me,
+                Posts: [{ id: action.data }, ...state.me.Posts],
+            },
+        }
+    case REMOVE_POST_OF_ME: 
+        return {
+            ...state,
+            me: {
+                ...state.me,
+                Posts: state.me.Posts.filter((v) => v.id !== action.data),
+            },
+        }
     default:
         return state
     }
