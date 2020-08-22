@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 
-function useInput (initialValue = null) {
+function useInput(initialValue = null) {
     const [value, setValue] = useState(initialValue)
     const handler = useCallback((e) => {
         setValue(e.target.value)
@@ -10,4 +10,3 @@ function useInput (initialValue = null) {
 }
 
 export default useInput
-

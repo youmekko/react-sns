@@ -1,10 +1,13 @@
+import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
-import { Menu, Input, Row, Col } from 'antd'
+import {
+    Menu, Input, Row, Col,
+} from 'antd'
+import { useSelector } from 'react-redux'
+import styled from 'styled-components'
 import UserProfile from './UserProfile'
 import LoginForm from './LoginForm'
-import styled from 'styled-components'
-import { useSelector } from 'react-redux'
 
 const SearchInput = styled(Input.Search)`
     vertical-align: middle;
@@ -37,20 +40,21 @@ const AppLayout = ({ children }) => {
                     {children}
                 </Col>
                 <Col xs={24} md={6}>
-                    <a href="http://youmekko.github.io" 
+                    <a
+                        href="http://youmekko.github.io"
                         target="_blank"
-                        rel="noreferrer noopener">
+                        rel="noreferrer noopener"
+                    >
                         Mede by Youmekko
                     </a>
                 </Col>
             </Row>
-           
         </div>
     )
 }
 
 AppLayout.propTypes = {
-    children: PropTypes.node.isRequired
+    children: PropTypes.node.isRequired,
 }
 
 export default AppLayout

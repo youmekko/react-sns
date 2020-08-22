@@ -1,4 +1,4 @@
-import  styled, { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 import { CloseOutlined } from '@ant-design/icons'
 
 export const Overlay = styled.div`
@@ -69,4 +69,4 @@ export const Indicator = styled.div`
         color: white;
         font-size: 15px;
     }
-`   
+`

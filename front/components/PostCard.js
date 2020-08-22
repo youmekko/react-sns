@@ -1,23 +1,25 @@
-import { Card, Popover, Button, Avatar, List, Comment } from 'antd'
-import { useState, useCallback } from 'react' 
-import { 
-    RetweetOutlined, 
-    HeartOutlined, 
+import React, { useState, useCallback } from 'react'
+import {
+    Card, Popover, Button, Avatar, List, Comment,
+} from 'antd'
+import {
+    RetweetOutlined,
+    HeartOutlined,
     HeartTwoTone,
-    MessageOutlined, 
-    EllipsisOutlined
+    MessageOutlined,
+    EllipsisOutlined,
 } from '@ant-design/icons'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import PostImages from './PostImages'
-import CommentForm from '../components/CommentForm'
-import PostCardContent from '../components/PostCardContent'
+import CommentForm from './CommentForm'
+import PostCardContent from './PostCardContent'
 
 function PostCard({ post }) {
     const [liked, setLiked] = useState(false)
     const [commentFormOpended, setCommentFormOpended] = useState(false)
 
-    const id = useSelector(state => state.user.me?.id)
+    const id = useSelector((state) => state.user.me?.id)
 
     const onToggleLike = useCallback(() => {
         setLiked((prev) => !prev)
@@ -28,29 +30,32 @@ function PostCard({ post }) {
     }, [])
 
     return (
-        <div style={{ marginBottom : '20px' }}>
+        <div style={{ marginBottom: '20px' }}>
             <Card
                 cover={post.Images[0] && <PostImages images={post.Images} />} 
                 actions={[ 
                     <RetweetOutlined key="retweet" />,
                     liked 
                         ? <HeartTwoTone twoToneColor="#eb2f96" key="heart" onClick={onToggleLike} />
-                        : <HeartOutlined key="heart" onClick={onToggleLike}/>,
-                    <MessageOutlined key="commnet" onClick={onToggleComment}/>,
-                    <Popover key="more" content={(
-                        <Button.Group>
-                            {id && post.User.id === id 
-                            ? (
-                                <>
-                                    <Button type="primary">Edit</Button>}
-                                    <Button type="danger">Delete</Button>
-                                </>
-                            ) 
-                            : <Button>Report</Button>}
-                        </Button.Group>
-                    )}>
+                        : <HeartOutlined key="heart" onClick={onToggleLike} />,
+                    <MessageOutlined key="commnet" onClick={onToggleComment} />,
+                    <Popover 
+                        key="more" 
+                        content={(
+                            <Button.Group>
+                                {id && post.User.id === id 
+                                    ? (
+                                        <>
+                                            <Button type="primary">Edit</Button>
+                                            <Button type="danger">Delete</Button>
+                                        </>
+                                    ) 
+                                    : <Button>Report</Button>}
+                            </Button.Group>
+                        )}
+                    >
                         <EllipsisOutlined />
-                    </Popover>
+                    </Popover>,
                 ]}
             >
                 <Card.Meta 
@@ -58,7 +63,7 @@ function PostCard({ post }) {
                     title={post.User.nickname}
                     description={<PostCardContent postData={post.content} />}
                 />
-                <Button></Button>
+                {/* <Button></Button> */}
             </Card>
             {commentFormOpended && (
                 <div>
@@ -78,8 +83,6 @@ function PostCard({ post }) {
                         )}
                     /> 
                 </div>)}
-            {/* <CommentForm />
-            <Comments /> */}
         </div>
     )
 }
@@ -87,13 +90,17 @@ function PostCard({ post }) {
 PostCard.propTypes = {
     post: PropTypes.shape({
         id: PropTypes.number,
-        User: PropTypes.object,
+        User: PropTypes.shape({
+            id: PropTypes.string,
+            nickname: PropTypes.string,
+        }),
         content: PropTypes.string,
-        createdAt: PropTypes.object,
-        Commnets: PropTypes.arrayOf(PropTypes.object),
-        Images: PropTypes.arrayOf(PropTypes.object)
-    }).isRequired
+        createdAt: PropTypes.shape({
+
+        }),
+        Comments: PropTypes.arrayOf(PropTypes.object),
+        Images: PropTypes.arrayOf(PropTypes.object),
+    }).isRequired,
 }
 
 export default PostCard
-  
