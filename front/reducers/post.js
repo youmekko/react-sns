@@ -4,6 +4,7 @@ import {
     REMOVE_POST_REQUEST, REMOVE_POST_SUCCESS, REMOVE_POST_FAILURE,
     ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAILURE,
 } from '../actions/post'
+import produce from 'immer'
 
 export const initialState = {
     mainPosts: [{
@@ -81,77 +82,54 @@ const dummyComment = (data) => ({
     },
 }) 
 
-const reducer = (state = initialState, action) => {
+const reducer = (state = initialState, action) => produce(state, (draft) => {
     switch (action.type) {
     case ADD_POST_REQUEST:
-        return {
-            ...state,
-            addPostLoading: true,
-            addPostDone: false,
-            addPostError: false,
-        }
+        draft.addPostLoading = true
+        draft.addPostDone = false
+        draft.addPostError = false
+        break
     case ADD_POST_SUCCESS:
-        return {
-            ...state,
-            mainPosts: [dummyPost(action.data), ...state.mainPosts],
-            addPostLoading: false,
-            addPostDone: true,
-        }
+        draft.addPostLoading = false
+        draft.addPostDone = true
+        draft.mainPosts.unshift(dummyPost(action.data))
+        break
     case ADD_POST_FAILURE:
-        return {
-            ...state,
-            addPostLoading: false,
-            addPostError: true,
-        }
+        draft.addPostLoading = false
+        draft.addPostError = true
+        break
     case REMOVE_POST_REQUEST:
-        return {
-            ...state,
-            removePostLoading: true,
-            removePostDone: false,
-            removePostError: false,
-        }
+        draft.removePostLoading = true
+        draft.removePostDone = false
+        draft.removePostError = false
+        break
     case REMOVE_POST_SUCCESS:
-        return {
-            ...state,
-            mainPosts: state.mainPosts.filter((v) => v.id !== action.data),
-            removePostLoading: false,
-            removePostDone: true,
-        }
+        draft.removePostLoading = false
+        draft.removePostDone = true
+        draft.mainPosts = draft.mainPosts.filter((v) => v.id !== action.data)
+        break
     case REMOVE_POST_FAILURE:
-        return {
-            ...state,
-            removePostLoading: false,
-            removePostError: true,
-        }
+        draft.removePostLoading = false
+        draft.removePostError = true
+        break
     case ADD_COMMENT_REQUEST:
-        return {
-            ...state,
-            addCommentLoading: true,
-            addCommentDone: false,
-            addCommentError: false,
-        }
-    case ADD_COMMENT_SUCCESS: {
-        const postIndex = state.mainPosts.findIndex((v) => v.id === action.data.postId)
-        const post = { ...state.mainPosts[postIndex] }
-        post.Comments = [dummyComment(action.data.content), ...post.Comments]
-        const mainPosts = [...state.mainPosts]
-        mainPosts[postIndex] = post
-        return {
-            ...state,
-            mainPosts,
-            addCommentLoading: false,
-            addCommentDone: true,
-        }
-    }
+        draft.addCommentLoading = true
+        draft.addCommentDone = false
+        draft.addCommentError = false
+        break
+    case ADD_COMMENT_SUCCESS: 
+        const post = draft.mainPosts.find((v) => v.id === action.data.postId)
+        post.Comments.unshift(dummyComment(action.data.contetn))
+        draft.addCommentLoading = false
+        draft.addCommentDone = true
+        break 
     case ADD_COMMENT_FAILURE:
-        return {
-            ...state,
-            addCommentLoading: false,
-            addCommentError: true,
-        }
+        draft.addCommentLoading = false
+        draft.addCommentError = true
+        break
     default:
-        return state
+        break
     }
-}
+})
 
 export default reducer

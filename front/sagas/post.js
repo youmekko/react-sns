@@ -2,14 +2,12 @@ import axios from 'axios'
 import {
     all, fork, delay, put, takeLatest,
 } from 'redux-saga/effects'
-
 import shortId from 'shortid'
 import {
     ADD_POST_REQUEST, ADD_POST_SUCCESS, ADD_POST_FAILURE,
     REMOVE_POST_REQUEST, REMOVE_POST_SUCCESS, REMOVE_POST_FAILURE,
     ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAILURE,
 } from '../actions/post'
-
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from '../actions/user'
 
 function addPostAPI(data) {
